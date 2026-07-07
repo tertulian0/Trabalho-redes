@@ -1,16 +1,16 @@
 import { useState } from "react";
 
+//separar em formulário geral e formulário por pavimento
 function MalhaHorizontalForm() {
   const [formData, setFormData] = useState({
-    numeroPavimentos: "",
-    pontosPorPavimento: "",
-    medidaDistancia: "",
-    categoriaCabo: "Cat6",
-    pontosDados: "",
-    pontosTelefonia: "",
-    pontosWifi: "",
-    materialSEQ: "",
-    materialSET: "",
+    numeroPavimentos: "",//form geral, parametro para quantos forms de pavimento serão preenchidos
+    pontosPorPavimento: "",//form específico
+    medidaDistancia: "",//colocar limite de distancia (90m) //form especifico
+    categoriaCabo: "Cat6",//form geral //"5e"|"6"|"6A"|"7"|"8",
+    pontosDados: "",//form especifico
+    pontosTelefonia: "",  //form especifico
+    materialSEQ: "",//descobrir
+    materialSET: "",//descobrir
   });
 
   const handleChange = (e) => {
@@ -25,10 +25,10 @@ function MalhaHorizontalForm() {
   // Cálculos automáticos
   const totalPontos =
     (Number(formData.pontosDados) || 0) +
-    (Number(formData.pontosTelefonia) || 0) +
-    (Number(formData.pontosWifi) || 0);
+    (Number(formData.pontosTelefonia) || 0);
+    
 
-  const totalPontosEdificacao =
+    const totalPontosEdificacao =
     (Number(formData.numeroPavimentos) || 0) *
     (Number(formData.pontosPorPavimento) || 0);
 
