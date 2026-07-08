@@ -5,7 +5,7 @@ function FormularioBackbone() {
     numeroPavimentos: 0,
     paresFibras: 0,
     medidaLance: 0,
-    tipoFibra: "MM"|"SM",
+    tipoFibra: "MM",
     caracteristicaFibra: "",
     quantidadeBackbonesAndar: 0,
     backbonePrimario: false,
@@ -15,22 +15,21 @@ function FormularioBackbone() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    
+
     setFormData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleBackboneSubmit = (e) => {
     e.preventDefault();
-
-    calcularBackbone(formData);
-
+    console.log("Backbone:", formData);
   };
 
+
   return (
-    <form onSubmit={handleSubmit} className="formulario">
+    <form onSubmit={handleBackboneSubmit} className="formulario">
       <h2 className="titulo">Infraestrutura de Backbone</h2>
       <div className="campo">
 

@@ -1,16 +1,14 @@
 import { useState } from "react";
+import { calcularMH } from "./CalculoMH.jsx";
 
 //separar em formulário geral e formulário por pavimento
 function MalhaHorizontalForm() {
   const [formData, setFormData] = useState({
-    numeroPavimentos: "",//form geral, parametro para quantos forms de pavimento serão preenchidos
-    pontosPorPavimento: "",//form específico
     medidaDistancia: "",//colocar limite de distancia (90m) //form especifico
-    categoriaCabo: "Cat6",//form geral //"5e"|"6"|"6A"|"7"|"8",
+    categoriaCabo: "5e"|"6"|"6A"|"7"|"8",//form geral "5e"|"6"|"6A"|"7"|"8",
     pontosDados: "",//form especifico
     pontosTelefonia: "",  //form especifico
-    materialSEQ: "",//descobrir
-    materialSET: "",//descobrir
+    pontosCFTV: "", //form especifico
   });
 
   const handleChange = (e) => {
@@ -21,52 +19,13 @@ function MalhaHorizontalForm() {
       [name]: value,
     }));
   };
-
-  // Cálculos automáticos
-  const totalPontos =
-    (Number(formData.pontosDados) || 0) +
-    (Number(formData.pontosTelefonia) || 0);
-    
-
-    const totalPontosEdificacao =
-    (Number(formData.numeroPavimentos) || 0) *
-    (Number(formData.pontosPorPavimento) || 0);
-
-  const handleSubmit = (e) => {
+  const handleMalhaHorizontalSubmit = (e) => {
     e.preventDefault();
-
-    console.log({
-      ...formData,
-      totalPontos,
-      totalPontosEdificacao,
-    });
-  };
-
+    console.log(calcularMH(formData));
+  }
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleMalhaHorizontalSubmit}>
       <h2>Malha Horizontal</h2>
-
-      <div>
-        <label>Número de pavimentos</label>
-        <input
-          type="number"
-          name="numeroPavimentos"
-          value={formData.numeroPavimentos}
-          onChange={handleChange}
-          min="1"
-        />
-      </div>
-
-      <div>
-        <label>Número de pontos por pavimento</label>
-        <input
-          type="number"
-          name="pontosPorPavimento"
-          value={formData.pontosPorPavimento}
-          onChange={handleChange}
-          min="0"
-        />
-      </div>
 
       <div>
         <label>Medida básica para cálculo da distância da MH (m)</label>
@@ -115,51 +74,6 @@ function MalhaHorizontalForm() {
           value={formData.pontosTelefonia}
           onChange={handleChange}
           min="0"
-        />
-      </div>
-
-      <div>
-        <label>Pontos para Wi-Fi</label>
-        <input
-          type="number"
-          name="pontosWifi"
-          value={formData.pontosWifi}
-          onChange={handleChange}
-          min="0"
-        />
-      </div>
-
-      <div>
-        <strong>Total de pontos por serviço: {totalPontos}</strong>
-      </div>
-
-      <div>
-        <strong>
-          Total de pontos da edificação: {totalPontosEdificacao}
-        </strong>
-      </div>
-
-      <h3>Materiais</h3>
-
-      <div>
-        <label>Material da SEQ</label>
-        <textarea
-          name="materialSEQ"
-          value={formData.materialSEQ}
-          onChange={handleChange}
-          rows="3"
-          placeholder="Ex.: Patch Panel, Switch, DIO..."
-        />
-      </div>
-
-      <div>
-        <label>Material da SET</label>
-        <textarea
-          name="materialSET"
-          value={formData.materialSET}
-          onChange={handleChange}
-          rows="3"
-          placeholder="Ex.: Rack, Organizadores, Tomadas RJ-45..."
         />
       </div>
 
