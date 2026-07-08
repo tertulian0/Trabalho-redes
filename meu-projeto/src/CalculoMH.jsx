@@ -18,8 +18,10 @@ export function calcularMH(formData) {
     const estiquetasPatchPanel = quantidadePPMH * 24;
     const quantidadePatchCables = totalPontos;
     //rack e as coisas dele depois coloca
-    
+
     //miscelânea
+
+    //retorno em objeto com os valores calculados
     return {
         numTomadas,
         numPatchCords,
