@@ -3,7 +3,6 @@ import { useState } from "react";
 function MalhaHorizontalForm() {
   const [formData, setFormData] = useState({
     numeroPavimentos: "",
-    pontosPorPavimento: "",
     medidaDistancia: "",
     categoriaCabo: "Cat5e",
     quantidadePontosTelecom: "",
