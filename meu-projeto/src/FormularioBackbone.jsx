@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { calcularBackbone } from "./CalculoBB";
 
 function FormularioBackbone() {
   const [formData, setFormData] = useState({
@@ -24,7 +25,9 @@ function FormularioBackbone() {
 
   const handleBackboneSubmit = (e) => {
     e.preventDefault();
-    setResultado(formData);
+    const orcamento = calcularBackbone(formData);
+    console.log("Orçamento Backbone:", orcamento);
+    setResultado(orcamento);
   };
 
   return (
