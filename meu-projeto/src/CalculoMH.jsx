@@ -36,7 +36,13 @@ export function calcularMH(formData) {
 
     //rack e as coisas dele depois coloca
     const tamanhoRack = calcularRack(switchTam, quantidadeSwitch, PPMHTAM, quantidadePPMH, organizadorFrontalTam, quantidadeOrgFrontal, noBreakTam);
-    const quantidadeRack = calcularQuantidadeRack(tamanhoRack); 
+    if(tamanhoRack > 48){
+        let quantidadeRack = calcularQuantidadeRack(tamanhoRack); 
+    }
+    else{
+        quantidadeRack = '1 Rack de '+tamanhoRack+'U';
+    }
+    
     
     //miscelânea
     const quantReguaDeFechamento = tamanhoRack*0.5;
@@ -67,12 +73,14 @@ export function calcularMH(formData) {
 function calcularRack(switchTam, quantidadeSwitch, PPMHTAM, quantidadePPMH, organizadorFrontalTam, quantidadeOrgFrontal, noBreakTam) {
    
     let tamanhoRack = 
-        switchTam*quantidadeSwitch 
+        (switchTam*quantidadeSwitch 
         + PPMHTAM*quantidadePPMH 
         + organizadorFrontalTam*quantidadeOrgFrontal 
-        + noBreakTam;
-    
-    if(tamanhoRack <= 12){ 
+        + noBreakTam)*1.5;
+    if(tamanhoRack < 6){
+        return 6;
+    }
+    else if(tamanhoRack > 6 && tamanhoRack <= 12){ 
         if(tamanhoRack%2 != 0){
             return tamanhoRack + 1;
         }
@@ -89,10 +97,29 @@ function calcularRack(switchTam, quantidadeSwitch, PPMHTAM, quantidadePPMH, orga
         }
     }
     else if(tamanhoRack > 48){
-        calcularQuantidadeRack(tamanhoRack);
+        return tamanhoRack;
     }
 }
 
 function calcularQuantidadeRack(tamanhoRack){
+    if(tamanhoRack*0.5 < 48){
+        return tamanhoRack*0.5;
+    }
+    for(let i = 2; i < 100; i++){
+        if(tamanhoRack/i <= 48 && tamanhoRack/i > 12){
+            if((tamanhoRack/i)%4 != 0){
+                tamanhoRack = (tamanhoRack/i) + (4 - (tamanhoRack%4));
+            }
+        }
+        else if(tamanhoRack/i <= 12){
+            if((tamanhoRack/i)%2 != 0){
+            tamanhoRack = (tamanhoRack/i) + 1;
+            }
+        }
+        else if(tamanhoRack/i < 6){
+            tamanhoRack = 6;
+        }
+        return i + " Rack de "+ tamanhoRack+"U";
+        }      
+    }
     
-}
