@@ -1,15 +1,16 @@
 import { useState } from "react";
-import { calcularMH } from "./CalculoMH.jsx";
 
-//separar em formulário geral e formulário por pavimento
 function MalhaHorizontalForm() {
   const [formData, setFormData] = useState({
-    medidaDistancia: "",//colocar limite de distancia (90m) //form especifico
-    categoriaCabo: "5e"|"6"|"6A"|"7"|"8",//form geral "5e"|"6"|"6A"|"7"|"8",
-    pontosDados: "",//form especifico
-    pontosTelefonia: "",  //form especifico
-    pontosCFTV: "", //form especifico
+    numeroPavimentos: "",
+    medidaDistancia: "",
+    categoriaCabo: "Cat5e",
+    quantidadePontosTelecom: "",
+    quantidadeDePontosVoIP: "",
+    quantidadeDePontosCFTV: "",
+    quantidadeDePontosDados: "",
   });
+  const [resultado, setResultado] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,16 +20,37 @@ function MalhaHorizontalForm() {
       [name]: value,
     }));
   };
+
+  const handlePavimentoChange = (index, field, value) => {
+    setFormData((prev) => {
+      const pavimentos = [...prev.pavimentos];
+      pavimentos[index] = { ...pavimentos[index], [field]: value };
+      return { ...prev, pavimentos };
+    });
+  };
+
   const handleMalhaHorizontalSubmit = (e) => {
     e.preventDefault();
-    console.log(calcularMH(formData));
-  }
-  return (
-    <form onSubmit={handleMalhaHorizontalSubmit}>
-      <h2>Malha Horizontal</h2>
+    setResultado(formData);
+  };
 
-      <div>
-        <label>Medida básica para cálculo da distância da MH (m)</label>
+  return (
+    <form onSubmit={handleMalhaHorizontalSubmit} className="formulario">
+      <h2 className="titulo">Malha Horizontal</h2>
+
+      <div className="campo">
+        <label className="label">Número de pavimentos da edificação</label>
+        <input
+          type="number"
+          name="numeroPavimentos"
+          value={formData.numeroPavimentos}
+          onChange={handleChange}
+          min="1"
+        />
+      </div>
+
+      <div className="campo">
+        <label className="label">Medida básica para cálculo da distância da MH (m)</label>
         <input
           type="number"
           name="medidaDistancia"
@@ -38,13 +60,9 @@ function MalhaHorizontalForm() {
         />
       </div>
 
-      <div>
-        <label>Categoria do cabo</label>
-        <select
-          name="categoriaCabo"
-          value={formData.categoriaCabo}
-          onChange={handleChange}
-        >
+      <div className="campo">
+        <label className="label">Categoria do cabo de MH</label>
+        <select name="categoriaCabo" value={formData.categoriaCabo} onChange={handleChange}>
           <option value="Cat5e">Categoria 5e</option>
           <option value="Cat6">Categoria 6</option>
           <option value="Cat6A">Categoria 6A</option>
@@ -53,31 +71,41 @@ function MalhaHorizontalForm() {
         </select>
       </div>
 
-      <h3>Pontos de Telecomunicações / Redes</h3>
-
-      <div>
-        <label>Pontos de Dados</label>
+      <div className="campo">
+        <label className="label">Pontos por serviços:</label>
+        <label className="label">VoIP</label>
         <input
           type="number"
-          name="pontosDados"
-          value={formData.pontosDados}
+          name="quantidadeDePontosVoIP"
+          value={formData.quantidadeDePontosVoIP}
           onChange={handleChange}
           min="0"
         />
-      </div>
-
-      <div>
-        <label>Pontos de Telefonia</label>
+        <label className="label">CFTV</label>
         <input
           type="number"
-          name="pontosTelefonia"
-          value={formData.pontosTelefonia}
+          name="quantidadeDePontosCFTV"
+          value={formData.quantidadeDePontosCFTV}
+          onChange={handleChange}
+          min="0"
+        />
+        <label className="label">Dados</label>
+        <input
+          type="number"
+          name="quantidadeDePontosDados"
+          value={formData.quantidadeDePontosDados}
           onChange={handleChange}
           min="0"
         />
       </div>
 
       <button type="submit">Salvar</button>
+
+      {resultado && (
+        <pre style={{ marginTop: "1rem", whiteSpace: "pre-wrap" }}>
+          {JSON.stringify(resultado, null, 2)}
+        </pre>
+      )}
     </form>
   );
 }
