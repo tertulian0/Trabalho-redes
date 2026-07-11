@@ -1,23 +1,13 @@
 import { useState } from "react";
 import { calcularBackbone } from "./CalculoBB";
 
-function FormularioBackbone() {
-  const [formData, setFormData] = useState({
-    numeroPavimentos: "",
-    paresFibrasDisponiveis: "",
-    medidaLance: "",
-    tipoFibra: "MM",
-    caracteristicaFibra: "",
-    quantidadeBackbonesPorAndar: "",
-    backbonePrimario: false,
-    backboneSecundario: false,
-  });
+function BackboneForm({ BackboneData, setBackboneData }) {
   const [resultado, setResultado] = useState(null);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
 
-    setFormData((prev) => ({
+    setBackboneData((prev) => ({
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
@@ -25,7 +15,7 @@ function FormularioBackbone() {
 
   const handleBackboneSubmit = (e) => {
     e.preventDefault();
-    const orcamento = calcularBackbone(formData);
+    const orcamento = calcularBackbone(BackboneData);
     console.log("Orçamento Backbone:", orcamento);
     setResultado(orcamento);
   };
@@ -39,7 +29,7 @@ function FormularioBackbone() {
         <input
           type="number"
           name="numeroPavimentos"
-          value={formData.numeroPavimentos}
+          value={BackboneData.numeroPavimentos}
           onChange={handleChange}
           min="1"
         />
@@ -50,7 +40,7 @@ function FormularioBackbone() {
         <input
           type="number"
           name="paresFibrasDisponiveis"
-          value={formData.paresFibrasDisponiveis}
+          value={BackboneData.paresFibrasDisponiveis}
           onChange={handleChange}
           min="1"
         />
@@ -61,15 +51,15 @@ function FormularioBackbone() {
         <input
           type="number"
           name="medidaLance"
-          value={formData.medidaLance}
+          value={BackboneData.medidaLance}
           onChange={handleChange}
           min="0"
         />
       </div>
 
       <div className="campo">
-        <label className="label">Especificação do cabo de fibra óptica</label>
-        <select name="tipoFibra" value={formData.tipoFibra} onChange={handleChange}>
+        <label className="label">Especificação do cabo de fibra óptica (MM/SM)</label>
+        <select name="tipoFibra" value={BackboneData.tipoFibra} onChange={handleChange}>
           <option value="MM">Multimodo (MM)</option>
           <option value="SM">Monomodo (SM)</option>
         </select>
@@ -80,7 +70,7 @@ function FormularioBackbone() {
         <input
           type="text"
           name="caracteristicaFibra"
-          value={formData.caracteristicaFibra}
+          value={BackboneData.caracteristicaFibra}
           onChange={handleChange}
           placeholder="Ex.: OM3, OM4, OS2..."
         />
@@ -91,20 +81,28 @@ function FormularioBackbone() {
         <input
           type="number"
           name="quantidadeBackbonesPorAndar"
-          value={formData.quantidadeBackbonesPorAndar}
+          value={BackboneData.quantidadeBackbonesPorAndar}
           onChange={handleChange}
           min="1"
         />
       </div>
+      
+      <div className="campo">
+        <label className="label">Especificação do cabo de fibra óptica (Tigth/Loose)</label>
+        <select name="tipoFibra" value={BackboneData.tipoFibraTBLS} onChange={handleChange}>
+          <option value="TB">Tigth Buffer (TB)</option>
+          <option value="LS">Loose (LS)</option>
+        </select>
+      </div>
 
       <div className="campo">
-        <label className="label">Verificação da existência de backbone primário e/ou secundário</label>
+        <label className="label">Existencia de quantos backbones primarios e secundarios</label>
         <div>
           <label>
             <input
-              type="checkbox"
-              name="backbonePrimario"
-              checked={formData.backbonePrimario}
+              type="number"
+              name="numBackbonePrimario"
+              checked={BackboneData.numBackbonePrimario}
               onChange={handleChange}
             />
             Backbone primário
@@ -113,9 +111,9 @@ function FormularioBackbone() {
         <div>
           <label>
             <input
-              type="checkbox"
-              name="backboneSecundario"
-              checked={formData.backboneSecundario}
+              type="number"
+              name="numBackboneSecundario"
+              checked={BackboneData.numBackboneSecundario}
               onChange={handleChange}
             />
             Backbone secundário

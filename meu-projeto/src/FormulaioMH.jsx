@@ -1,15 +1,6 @@
 import { useState } from "react";
 
-function MalhaHorizontalForm() {
-  const [formData, setFormData] = useState({
-    numeroPavimentos: "",
-    medidaDistancia: "",
-    categoriaCabo: "Cat5e",
-    quantidadePontosTelecom: "",
-    quantidadeDePontosVoIP: "",
-    quantidadeDePontosCFTV: "",
-    quantidadeDePontosDados: "",
-  });
+function MalhaHorizontalForm({ formData, setFormData }) {
   const [resultado, setResultado] = useState(null);
 
   const handleChange = (e) => {
@@ -26,7 +17,7 @@ function MalhaHorizontalForm() {
       const pavimentos = [...prev.pavimentos];
       pavimentos[index] = { ...pavimentos[index], [field]: value };
       return { ...prev, pavimentos };
-    });
+    }); 
   };
 
   const handleMalhaHorizontalSubmit = (e) => {
