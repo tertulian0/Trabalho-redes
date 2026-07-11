@@ -4,6 +4,7 @@ import { FormularioInicialMH } from './FormularioInicialMH'
 import MalhaHorizontalForm from './FormulaioMH'
 import BackboneForm from './FormularioBB'
 import ResultadoMH from './ResultadoMH'
+import ResultadoBB from './ResultadoBB'
 import { useState } from 'react'
 
 
@@ -25,10 +26,10 @@ const [backboneData, setBackboneData] = useState({
   medidaLance: 0,
   tipoFibra: "MM",
   caracteristicaFibra: "",
-  tipoFibraTBLS: "",
+  tipoFibraTBLS: "TB",
   quantidadeBackbonesPorAndar: 0,
-  backbonePrimario: 0,
-  backboneSecundario: 0,
+  numBackbonePrimario: 0,
+  numBackboneSecundario: 0,
 });
   return (
     <BrowserRouter>
@@ -72,6 +73,11 @@ const [backboneData, setBackboneData] = useState({
             <Route
               path="/resultadoMH"
               element={<ResultadoMH malhaData={malhaData} />}
+            />
+
+            <Route
+              path="/resultadoBB"
+              element={<ResultadoBB backboneData={backboneData} />}
             />
           </Routes>
         </main>

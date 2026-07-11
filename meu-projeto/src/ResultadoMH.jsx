@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import { calcularMH } from './CalculoMH';
-import { useState } from 'react';
 
-function ResultadoMH({malhaData }) {
-  if (!malhaData.numeroPavimentos) {
+
+function ResultadoMH({ malhaData }) {
+  if (!malhaData || !malhaData.numeroPavimentos) {
     return (
       <div className="resultado-container">
         <h2 className="titulo">Nenhum resultado disponível</h2>
@@ -15,13 +15,13 @@ function ResultadoMH({malhaData }) {
     );
   }
 
-  const [resultado, setResultado] = useState(() => calcularMH(...malhaData));
-  
+  const resultado = calcularMH(malhaData);
+
   const totalPontos =
     Number(malhaData.quantidadeDePontosVoIP || 0) +
     Number(malhaData.quantidadeDePontosCFTV || 0) +
     Number(malhaData.quantidadeDePontosDados || 0);
-    
+
 
   const distanciaTotal = Number(malhaData.medidaDistancia || 0) * Number(malhaData.numeroPavimentos || 1);
 
@@ -69,7 +69,27 @@ function ResultadoMH({malhaData }) {
         </div>
       </div>
       <div className="resultado-card">
-        <h3>Especificação dos materiais</h3>
+        <h3>Área de Trabalho</h3>
+        <div className="resultado-item">
+          <span className="label">Número de Tomadas:</span>
+          <span className="valor">{resultado.numTomadas}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Patch Cords:</span>
+          <span className="valor">{resultado.numPatchCords}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Espelhos de Conexão:</span>
+          <span className="valor">{resultado.espelhosConexao}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Etiquetas de Tomada:</span>
+          <span className="valor">{resultado.etiquetasTomada}</span>
+        </div>
+      </div>
+
+      <div className="resultado-card">
+        <h3>Cabeamento Horizontal</h3>
         <div className="resultado-item">
           <span className="label">Cabo de malha horizontal:</span>
           <span className="valor">{resultado.quantidadeCaixas}</span>
@@ -78,6 +98,10 @@ function ResultadoMH({malhaData }) {
           <span className="label">Etiquetas de malha horizontal:</span>
           <span className="valor">{resultado.etiquetaMH}</span>
         </div>
+      </div>
+
+      <div className="resultado-card">
+        <h3>Sala de Telecomunicações</h3>
         <div className="resultado-item">
           <span className="label">Patch Panel:</span>
           <span className="valor">{resultado.quantidadePPMH}</span>
@@ -92,7 +116,7 @@ function ResultadoMH({malhaData }) {
         </div>
         <div className="resultado-item">
           <span className="label">Etiquetas Patch Panel:</span>
-          <span className="valor">{resultado.estiquetasPatchPanel}</span>
+          <span className="valor">{resultado.etiquetasPatchPanel}</span>
         </div>
         <div className="resultado-item">
           <span className="label">Patch Cable Amarelo:</span>
@@ -107,7 +131,39 @@ function ResultadoMH({malhaData }) {
           <span className="valor">{resultado.quantidadePatchCableVermelho}</span>
         </div>
       </div>
-      
+
+      <div className="resultado-card">
+        <h3>Rack</h3>
+        <div className="resultado-item">
+          <span className="label">Rack:</span>
+          <span className="valor">{resultado.quantidadeRack}</span>
+        </div>
+      </div>
+
+      <div className="resultado-card">
+        <h3>Miscelânea</h3>
+        <div className="resultado-item">
+          <span className="label">Régua de Fechamento:</span>
+          <span className="valor">{resultado.quantReguaDeFechamento}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Porca Gaiola:</span>
+          <span className="valor">{resultado.quantidadePorcaGaiola}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Abraçadeira Velcro:</span>
+          <span className="valor">{resultado.quantidadeRolosAbracadeiraVelcro}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Abraçadeira Plástica:</span>
+          <span className="valor">{resultado.quantidadeRolosAbracadeiraPlastica}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Régua de Filtro de Linha:</span>
+          <span className="valor">{resultado.quantidadeReguaDeFiltroDeLinha}</span>
+        </div>
+      </div>
+
       <div className="resultado-acoes">
         <Link to="/malha-horizontal" className="botao-voltar">
           Voltar

@@ -37,20 +37,25 @@ export function calcularMH(formData) {
 
     //rack e as coisas dele depois coloca
     const tamanhoRack = calcularRack(switchTam, quantidadeSwitch, PPMHTAM, quantidadePPMH, organizadorFrontalTam, quantidadeOrgFrontal, noBreakTam);
+    let numRacks;
+    let quantidadeRack;
     if(tamanhoRack > 48){
-        var quantidadeRack = calcularQuantidadeRack(tamanhoRack); 
+        const rackInfo = calcularQuantidadeRack(tamanhoRack);
+        numRacks = rackInfo.quantidade;
+        quantidadeRack = rackInfo.descricao;
     }
     else{
-        quantidadeRack = '1 Rack de '+tamanhoRack+'U';
+        numRacks = 1;
+        quantidadeRack = '1 Rack de ' + tamanhoRack + 'U';
     }
     
     
     //miscelânea
-    const quantReguaDeFechamento = tamanhoRack*0.5;
-    const quantidadePorcaGaiola = tamanhoRack*4;   
-    const quantidadeRolosAbracadeiraVelcro = quantidadeRack + " rolos de 3M Velcro 25mm";
-    const quantidadeRolosAbracadeiraPlastica = quantidadeRack + " pacotes de 100m";
-    const quantidadeReguaDeFiltroDeLinha = quantidadeRack*1;
+    const quantReguaDeFechamento = tamanhoRack * 0.5;
+    const quantidadePorcaGaiola = tamanhoRack * 4;   
+    const quantidadeRolosAbracadeiraVelcro = numRacks + " rolos de 3M Velcro 25mm";
+    const quantidadeRolosAbracadeiraPlastica = numRacks + " pacotes de 100m";
+    const quantidadeReguaDeFiltroDeLinha = numRacks;
 
     //retorno em objeto com os valores calculados
     return {
@@ -62,6 +67,7 @@ export function calcularMH(formData) {
         etiquetaMH,
         quantidadePPMH,
         quantidadeOrgFrontal,
+        quantidadeSwitch,
         etiquetasPatchPanel,
         quantidadePatchCableAmarelo,
         quantidadePatchCableAzul,
@@ -82,49 +88,51 @@ function calcularRack(switchTam, quantidadeSwitch, PPMHTAM, quantidadePPMH, orga
         + PPMHTAM*quantidadePPMH 
         + organizadorFrontalTam*quantidadeOrgFrontal 
         + noBreakTam)*1.5;
+
+    tamanhoRack = Math.ceil(tamanhoRack);
+
     if(tamanhoRack < 6){
         return 6;
     }
-    else if(tamanhoRack > 6 && tamanhoRack <= 12){ 
-        if(tamanhoRack%2 != 0){
+    else if(tamanhoRack <= 12){ 
+        // arredonda para par
+        if(tamanhoRack % 2 != 0){
             return tamanhoRack + 1;
         }
-        else{
-            return tamanhoRack;
-        }
+        return tamanhoRack;
     }
-    else if (tamanhoRack >= 48){
-        if(tamanhoRack%4 != 0){
-            return tamanhoRack + (4 - (tamanhoRack%4));
+    else if(tamanhoRack <= 48){
+        // arredonda para múltiplo de 4
+        if(tamanhoRack % 4 != 0){
+            return tamanhoRack + (4 - (tamanhoRack % 4));
         }
-        else{
-            return tamanhoRack;
-        }
+        return tamanhoRack;
     }
-    else if(tamanhoRack > 48){
+    else{
+        // > 48, será dividido em múltiplos racks
         return tamanhoRack;
     }
 }
 
 function calcularQuantidadeRack(tamanhoRack){
-    if(tamanhoRack*0.5 < 48){
-        return tamanhoRack*0.5;
+    // Divide o tamanho total em racks de no máximo 48U
+    const numRacks = Math.ceil(tamanhoRack / 48);
+    let tamanhoPorRack = Math.ceil(tamanhoRack / numRacks);
+
+    // Arredonda para tamanho padrão
+    if(tamanhoPorRack <= 12){
+        if(tamanhoPorRack % 2 != 0){
+            tamanhoPorRack = tamanhoPorRack + 1;
+        }
     }
-    for(let i = 2; i < 100; i++){
-        if(tamanhoRack/i <= 48 && tamanhoRack/i > 12){
-            if((tamanhoRack/i)%4 != 0){
-                tamanhoRack = (tamanhoRack/i) + (4 - (tamanhoRack%4));
-            }
+    else if(tamanhoPorRack <= 48){
+        if(tamanhoPorRack % 4 != 0){
+            tamanhoPorRack = tamanhoPorRack + (4 - (tamanhoPorRack % 4));
         }
-        else if(tamanhoRack/i <= 12){
-            if((tamanhoRack/i)%2 != 0){
-            tamanhoRack = (tamanhoRack/i) + 1;
-            }
-        }
-        else if(tamanhoRack/i < 6){
-            tamanhoRack = 6;
-        }
-        return i + " Rack de "+ tamanhoRack+"U";
-        }      
     }
-    
+
+    return {
+        quantidade: numRacks,
+        descricao: numRacks + " Rack(s) de " + tamanhoPorRack + "U"
+    };
+}

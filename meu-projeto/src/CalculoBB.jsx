@@ -14,19 +14,17 @@ export function calcularBackbone(BackboneData) {
   
   //calculo bb primario
   let comprimentoDeCaboBackbonePrimario = 0;
-  let medidaLanceTotal = medidaLance * quantidadeBackbonesPorAndar;
+  const lancePorAndar = medidaLance * quantidadeBackbonesPorAndar;
   for (let index = 0; index < numeroPavimentos; index++) {
-    comprimentoDeCaboBackbonePrimario += medidaLanceTotal;
-    medidaLanceTotal += medidaLanceTotal;
+    // cada andar adiciona a distância do lance acumulada (andar 1 = 1x, andar 2 = 2x, etc.)
+    comprimentoDeCaboBackbonePrimario += lancePorAndar * (index + 1);
   }
   comprimentoDeCaboBackbonePrimario = comprimentoDeCaboBackbonePrimario * 1.1 * backbonePrimario;
 
   //calculo bb secundario
   let comprimentoDeCaboBackboneSecundario = 0;
-  medidaLanceTotal = medidaLance * quantidadeBackbonesPorAndar;
   for (let index = 0; index < numeroPavimentos; index++) {
-    comprimentoDeCaboBackboneSecundario += medidaLanceTotal;
-    medidaLanceTotal += medidaLanceTotal;
+    comprimentoDeCaboBackboneSecundario += lancePorAndar * (index + 1);
   }
   comprimentoDeCaboBackboneSecundario = comprimentoDeCaboBackboneSecundario * 1.2 * backboneSecundario;
 
@@ -58,7 +56,7 @@ export function calcularBackbone(BackboneData) {
   }
 
   if (tipoFibraTBLS == "TB") {
-    tipoFibraTBLS = "Tigth buffer";
+    tipoFibraTBLS = "Tight Buffer";
   } else{
     tipoFibraTBLS = "Loose";
   }

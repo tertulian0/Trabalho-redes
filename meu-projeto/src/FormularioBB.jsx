@@ -1,28 +1,17 @@
-import { useState } from "react";
-import { calcularBackbone } from "./CalculoBB";
 import { Link } from "react-router-dom";
 
 function BackboneForm({ BackboneData, setBackboneData }) {
-  const [resultado, setResultado] = useState(null);
-
   const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
+    const { name, value } = e.target;
 
     setBackboneData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? checked : value,
+      [name]: value,
     }));
   };
 
-  const handleBackboneSubmit = (e) => {
-    e.preventDefault();
-    const orcamento = calcularBackbone(BackboneData);
-    console.log("Orçamento Backbone:", orcamento);
-    setResultado(orcamento);
-  };
-
   return (
-    <form onSubmit={handleBackboneSubmit} className="formulario">
+    <form className="formulario">
       <h2 className="titulo">Infraestrutura de Backbone</h2>
 
       <div className="campo">
@@ -89,48 +78,40 @@ function BackboneForm({ BackboneData, setBackboneData }) {
       </div>
       
       <div className="campo">
-        <label className="label">Especificação do cabo de fibra óptica (Tigth/Loose)</label>
+        <label className="label">Especificação do cabo de fibra óptica (Tight/Loose)</label>
         <select name="tipoFibraTBLS" value={BackboneData.tipoFibraTBLS} onChange={handleChange}>
-          <option value="TB">Tigth Buffer (TB)</option>
+          <option value="TB">Tight Buffer (TB)</option>
           <option value="LS">Loose (LS)</option>
         </select>
       </div>
 
       <div className="campo">
-        <label className="label">Existencia de quantos backbones primarios e secundarios</label>
+        <label className="label">Quantidade de backbones primários e secundários</label>
         <div>
-          <label>
-            <input
-              type="number"
-              name="numBackbonePrimario"
-              checked={BackboneData.numBackbonePrimario}
-              onChange={handleChange}
-            />
-            Backbone primário
-          </label>
+          <label className="label">Backbone primário</label>
+          <input
+            type="number"
+            name="numBackbonePrimario"
+            value={BackboneData.numBackbonePrimario}
+            onChange={handleChange}
+            min="0"
+          />
         </div>
         <div>
-          <label>
-            <input
-              type="number"
-              name="numBackboneSecundario"
-              checked={BackboneData.numBackboneSecundario}
-              onChange={handleChange}
-            />
-            Backbone secundário
-          </label>
+          <label className="label">Backbone secundário</label>
+          <input
+            type="number"
+            name="numBackboneSecundario"
+            value={BackboneData.numBackboneSecundario}
+            onChange={handleChange}
+            min="0"
+          />
         </div>
       </div>
 
-      <Link to="/backbone" className="botao-salvar" onClick={handleBackboneSubmit}>
+      <Link to="/resultadoBB" className="botao-salvar">
         Salvar
       </Link>
-
-      {resultado && (
-        <pre style={{ marginTop: "1rem", whiteSpace: "pre-wrap" }}>
-          {JSON.stringify(resultado, null, 2)}
-        </pre>
-      )}
     </form>
   );
 }
