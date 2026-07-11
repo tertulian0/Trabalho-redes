@@ -69,7 +69,7 @@ function ResultadoMH({malhaData }) {
         </div>
       </div>
       <div className="resultado-card">
-        <h3>Especificacao dos materiais</h3>
+        <h3>Especificação dos materiais</h3>
         <div className="resultado-item">
           <span className="label">Cabo de malha horizontal:</span>
           <span className="valor">{resultado.quantidadeCaixas}</span>
@@ -109,7 +109,7 @@ function ResultadoMH({malhaData }) {
       </div>
       
       <div className="resultado-acoes">
-        <Link to="/malha-horizontal" className="botao-voltar" state={calcularMH(malhaData)}>
+        <Link to="/malha-horizontal" className="botao-voltar">
           Voltar
         </Link>
         <Link to="/" className="botao-home">

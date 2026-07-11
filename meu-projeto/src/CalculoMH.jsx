@@ -1,9 +1,9 @@
 
 export function calcularMH(formData) {
     //variaveis base
-    let pontosDados = Number(formData.pontosDados);
-    let pontosTelefonia = Number(formData.pontosTelefonia);
-    let pontosCFTV = Number(formData.pontosCFTV); 
+    let pontosDados = Number(formData.quantidadeDePontosDados);
+    let pontosTelefonia = Number(formData.quantidadeDePontosVoIP);
+    let pontosCFTV = Number(formData.quantidadeDePontosCFTV); 
     const totalPontos = pontosDados + pontosTelefonia + pontosCFTV; 
 
     //medida de U por componente do rack
@@ -30,7 +30,7 @@ export function calcularMH(formData) {
 
 
 
-    const estiquetasPatchPanel = quantidadePPMH * 24;
+    const etiquetasPatchPanel = quantidadePPMH * 24;
     const quantidadePatchCableAmarelo = pontosTelefonia;
     const quantidadePatchCableAzul = pontosDados;
     const quantidadePatchCableVermelho = pontosCFTV;
@@ -62,7 +62,7 @@ export function calcularMH(formData) {
         etiquetaMH,
         quantidadePPMH,
         quantidadeOrgFrontal,
-        estiquetasPatchPanel,
+        etiquetasPatchPanel,
         quantidadePatchCableAmarelo,
         quantidadePatchCableAzul,
         quantidadePatchCableVermelho,

@@ -1,11 +1,11 @@
-export function calcularBackbone(malhaData, BackboneData) {
+export function calcularBackbone(BackboneData) {
   
   const numeroPavimentos = Number(BackboneData.numeroPavimentos);
   const paresFibrasDisponiveis = Number(BackboneData.paresFibrasDisponiveis);
   const medidaLance = Number(BackboneData.medidaLance);
   
-  const backboneSecundario = Number(BackboneData.backboneSecundario);
-  const backbonePrimario = Number(BackboneData.backbonePrimario);
+  const backboneSecundario = Number(BackboneData.numBackboneSecundario || 0);
+  const backbonePrimario = Number(BackboneData.numBackbonePrimario || 0);
   const quantidadeBackbonesPorAndar = Number(BackboneData.quantidadeBackbonesPorAndar);
   
   const caracteristicaFibra = BackboneData.caracteristicaFibra;
@@ -16,15 +16,16 @@ export function calcularBackbone(malhaData, BackboneData) {
   let comprimentoDeCaboBackbonePrimario = 0;
   let medidaLanceTotal = medidaLance * quantidadeBackbonesPorAndar;
   for (let index = 0; index < numeroPavimentos; index++) {
-    comprimentoDeCabo += medidaLanceTotal;
+    comprimentoDeCaboBackbonePrimario += medidaLanceTotal;
     medidaLanceTotal += medidaLanceTotal;
   }
   comprimentoDeCaboBackbonePrimario = comprimentoDeCaboBackbonePrimario * 1.1 * backbonePrimario;
 
   //calculo bb secundario
   let comprimentoDeCaboBackboneSecundario = 0;
+  medidaLanceTotal = medidaLance * quantidadeBackbonesPorAndar;
   for (let index = 0; index < numeroPavimentos; index++) {
-    comprimentoDeCabo += medidaLanceTotal;
+    comprimentoDeCaboBackboneSecundario += medidaLanceTotal;
     medidaLanceTotal += medidaLanceTotal;
   }
   comprimentoDeCaboBackboneSecundario = comprimentoDeCaboBackboneSecundario * 1.2 * backboneSecundario;
@@ -32,7 +33,8 @@ export function calcularBackbone(malhaData, BackboneData) {
 
   //calculo de outros itens
   const paresFibraTotal = paresFibrasDisponiveis * numeroPavimentos;
-  let dispositivoDeRecepcao = "";
+  let dispositivoDio = "";
+  let dispositivoTo = "";
   let numDIO = 0;
   let numTO = 0;
 
@@ -62,7 +64,7 @@ export function calcularBackbone(malhaData, BackboneData) {
   }
 
   //strings para retorno
-  const fibraoptica = 'Fibra ${tipoFibra} ${caracteristicaFibra} ${tipoFibraTBLS} ${paresFibraTotal} fibras $';
+  const fibraoptica = `Fibra ${tipoFibra} ${caracteristicaFibra} ${tipoFibraTBLS} ${paresFibraTotal} fibras`;
 
 
 

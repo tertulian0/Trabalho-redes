@@ -90,7 +90,7 @@ function BackboneForm({ BackboneData, setBackboneData }) {
       
       <div className="campo">
         <label className="label">Especificação do cabo de fibra óptica (Tigth/Loose)</label>
-        <select name="tipoFibra" value={BackboneData.tipoFibraTBLS} onChange={handleChange}>
+        <select name="tipoFibraTBLS" value={BackboneData.tipoFibraTBLS} onChange={handleChange}>
           <option value="TB">Tigth Buffer (TB)</option>
           <option value="LS">Loose (LS)</option>
         </select>
