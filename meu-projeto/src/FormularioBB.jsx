@@ -132,4 +132,4 @@ function BackboneForm({ BackboneData, setBackboneData }) {
   );
 }
 
-export default FormularioBackbone;
+export default BackboneForm;
