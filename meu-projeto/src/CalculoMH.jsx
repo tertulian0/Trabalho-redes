@@ -1,10 +1,10 @@
 
 export function calcularMH(formData) {
     //variaveis base
-    const totalPontos = pontosDados + pontosTelefonia + pontosCFTV; 
     let pontosDados = Number(formData.pontosDados);
     let pontosTelefonia = Number(formData.pontosTelefonia);
     let pontosCFTV = Number(formData.pontosCFTV); 
+    const totalPontos = pontosDados + pontosTelefonia + pontosCFTV; 
 
     //medida de U por componente do rack
     const switchTam = 2;
@@ -28,15 +28,17 @@ export function calcularMH(formData) {
     const quantidadeOrgFrontal = quantidadePPMH * 2;
     const quantidadeSwitch = Math.ceil(totalPontos / 24); 
 
+
+
     const estiquetasPatchPanel = quantidadePPMH * 24;
-    const quantidadePatchCableAmarelo = totalPontosTelefonia;
-    const quantidadePatchCableAzul = totalPontosDados;
-    const quantidadePatchCableVermelho = totalPontosCFTV;
+    const quantidadePatchCableAmarelo = pontosTelefonia;
+    const quantidadePatchCableAzul = pontosDados;
+    const quantidadePatchCableVermelho = pontosCFTV;
 
     //rack e as coisas dele depois coloca
     const tamanhoRack = calcularRack(switchTam, quantidadeSwitch, PPMHTAM, quantidadePPMH, organizadorFrontalTam, quantidadeOrgFrontal, noBreakTam);
     if(tamanhoRack > 48){
-        let quantidadeRack = calcularQuantidadeRack(tamanhoRack); 
+        var quantidadeRack = calcularQuantidadeRack(tamanhoRack); 
     }
     else{
         quantidadeRack = '1 Rack de '+tamanhoRack+'U';

@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
+import { calcularMH } from './CalculoMH';
+import { useState } from 'react';
 
-function ResultadoMH({ malhaData }) {
+function ResultadoMH({malhaData }) {
   if (!malhaData.numeroPavimentos) {
     return (
       <div className="resultado-container">
@@ -13,10 +15,13 @@ function ResultadoMH({ malhaData }) {
     );
   }
 
+  const [resultado, setResultado] = useState(() => calcularMH(...malhaData));
+  
   const totalPontos =
     Number(malhaData.quantidadeDePontosVoIP || 0) +
     Number(malhaData.quantidadeDePontosCFTV || 0) +
     Number(malhaData.quantidadeDePontosDados || 0);
+    
 
   const distanciaTotal = Number(malhaData.medidaDistancia || 0) * Number(malhaData.numeroPavimentos || 1);
 
@@ -63,9 +68,48 @@ function ResultadoMH({ malhaData }) {
           <span className="valor">{totalPontos}</span>
         </div>
       </div>
-
+      <div className="resultado-card">
+        <h3>Especificacao dos materiais</h3>
+        <div className="resultado-item">
+          <span className="label">Cabo de malha horizontal:</span>
+          <span className="valor">{resultado.quantidadeCaixas}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Etiquetas de malha horizontal:</span>
+          <span className="valor">{resultado.etiquetaMH}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Patch Panel:</span>
+          <span className="valor">{resultado.quantidadePPMH}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Organizador Frontal:</span>
+          <span className="valor">{resultado.quantidadeOrgFrontal}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Switch:</span>
+          <span className="valor">{resultado.quantidadeSwitch}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Etiquetas Patch Panel:</span>
+          <span className="valor">{resultado.estiquetasPatchPanel}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Patch Cable Amarelo:</span>
+          <span className="valor">{resultado.quantidadePatchCableAmarelo}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Patch Cable Azul:</span>
+          <span className="valor">{resultado.quantidadePatchCableAzul}</span>
+        </div>
+        <div className="resultado-item">
+          <span className="label">Patch Cable Vermelho:</span>
+          <span className="valor">{resultado.quantidadePatchCableVermelho}</span>
+        </div>
+      </div>
+      
       <div className="resultado-acoes">
-        <Link to="/malha-horizontal" className="botao-voltar">
+        <Link to="/malha-horizontal" className="botao-voltar" state={calcularMH(malhaData)}>
           Voltar
         </Link>
         <Link to="/" className="botao-home">

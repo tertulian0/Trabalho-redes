@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { calcularMH } from "./CalculoMH";
 
 function MalhaHorizontalForm({ formData, setFormData }) {
   const handleChange = (e) => {
@@ -10,12 +11,8 @@ function MalhaHorizontalForm({ formData, setFormData }) {
     }));
   };
 
-  const handleMalhaHorizontalSubmit = (e) => {
-    e.preventDefault();
-  };
-
   return (
-    <form onSubmit={handleMalhaHorizontalSubmit} className="formulario">
+    <form className="formulario">
       <h2 className="titulo">Malha Horizontal</h2>
 
       <div className="campo">
@@ -79,7 +76,7 @@ function MalhaHorizontalForm({ formData, setFormData }) {
         />
       </div>
 
-      <Link to="/resultadoMH" className="botao-salvar" onClick={handleMalhaHorizontalSubmit}>
+      <Link to="/resultadoMH" className="botao-salvar" state={{ ...formData }}>
         Salvar
       </Link>
     </form>
