@@ -32,7 +32,7 @@ const [backboneData, setBackboneData] = useState({
   numBackboneSecundario: 0,
 });
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/Trabalho-redes">
       <div className="app-shell">
         <header className="app-header">
           <div>
