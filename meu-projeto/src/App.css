@@ -142,6 +142,15 @@ form button {
     border-radius: 999px;
     cursor: pointer;
 }
+.botao-salvar {
+    width: fit-content;
+    padding: 10px 20px;
+    background-color: #15803d;
+    color: white;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+}
 
 form button:hover {
     background-color: #166534;
@@ -165,4 +174,87 @@ form button:hover {
     text-align: center;
     font-size: 30px;
     margin-bottom: 8px;
+}
+
+.resultado-container {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 24px;
+    border-radius: 24px;
+    background-color: #e2e8f0;
+    color: #0f172a;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+.resultado-card {
+    background: #f1f5f9;
+    padding: 20px;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    border-left: 4px solid #15803d;
+}
+
+.resultado-card h3 {
+    margin: 0 0 16px;
+    font-size: 20px;
+    color: #15803d;
+}
+
+.resultado-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #cbd5e1;
+}
+
+.resultado-item:last-child {
+    border-bottom: none;
+}
+
+.resultado-item .label {
+    font-weight: 600;
+    color: #334155;
+}
+
+.resultado-item .valor {
+    font-weight: 700;
+    color: #15803d;
+    font-size: 18px;
+}
+
+.resultado-total .label {
+    color: #15803d;
+}
+
+.resultado-total .valor {
+    font-size: 24px;
+}
+
+.resultado-acoes {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 24px;
+}
+
+.botao-voltar,
+.botao-home {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0 24px;
+    border-radius: 999px;
+    background: #15803d;
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.botao-voltar:hover,
+.botao-home:hover {
+    background: #166534;
 }

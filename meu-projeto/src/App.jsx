@@ -3,6 +3,7 @@ import './App.css'
 import { FormularioInicialMH } from './FormularioInicialMH'
 import MalhaHorizontalForm from './FormulaioMH'
 import BackboneForm from './FormularioBB'
+import ResultadoMH from './ResultadoMH'
 import { useState } from 'react'
 
 
@@ -66,6 +67,11 @@ const [backboneData, setBackboneData] = useState({
                   setBackboneData={setBackboneData}
                 />
               }
+            />
+
+            <Route
+              path="/resultadoMH"
+              element={<ResultadoMH malhaData={malhaData} />}
             />
           </Routes>
         </main>
