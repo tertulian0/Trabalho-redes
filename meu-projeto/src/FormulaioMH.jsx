@@ -1,8 +1,6 @@
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
 function MalhaHorizontalForm({ formData, setFormData }) {
-  const [resultado, setResultado] = useState(null);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -12,17 +10,8 @@ function MalhaHorizontalForm({ formData, setFormData }) {
     }));
   };
 
-  const handlePavimentoChange = (index, field, value) => {
-    setFormData((prev) => {
-      const pavimentos = [...prev.pavimentos];
-      pavimentos[index] = { ...pavimentos[index], [field]: value };
-      return { ...prev, pavimentos };
-    }); 
-  };
-
   const handleMalhaHorizontalSubmit = (e) => {
     e.preventDefault();
-    setResultado(formData);
   };
 
   return (
@@ -90,13 +79,9 @@ function MalhaHorizontalForm({ formData, setFormData }) {
         />
       </div>
 
-      <button type="submit">Salvar</button>
-
-      {resultado && (
-        <pre style={{ marginTop: "1rem", whiteSpace: "pre-wrap" }}>
-          {JSON.stringify(resultado, null, 2)}
-        </pre>
-      )}
+      <Link to="/resultadoMH" className="botao-salvar" onClick={handleMalhaHorizontalSubmit}>
+        Salvar
+      </Link>
     </form>
   );
 }

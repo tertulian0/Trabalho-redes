@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { calcularBackbone } from "./CalculoBB";
+import { Link } from "react-router-dom";
 
 function BackboneForm({ BackboneData, setBackboneData }) {
   const [resultado, setResultado] = useState(null);
@@ -121,7 +122,9 @@ function BackboneForm({ BackboneData, setBackboneData }) {
         </div>
       </div>
 
-      <button type="submit">Salvar</button>
+      <Link to="/backbone" className="botao-salvar" onClick={handleBackboneSubmit}>
+        Salvar
+      </Link>
 
       {resultado && (
         <pre style={{ marginTop: "1rem", whiteSpace: "pre-wrap" }}>
