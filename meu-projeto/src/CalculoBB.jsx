@@ -31,32 +31,38 @@ export function calcularBackbone(malhaData, BackboneData) {
 
 
   //calculo de outros itens
+  const paresFibraTotal = paresFibrasDisponiveis * numeroPavimentos;
   let dispositivoDeRecepcao = "";
-  let numeroDeDispositivosDeRecepcao = numeroPavimentos;
-  
+  let numDIO = 0;
+  let numTO = 0;
+
+  numDIO = Math.ceil(paresFibraTotal / 48);
+
   if (paresFibrasDisponiveis > 12) {
-    dispositivoDeRecepcao = "Distribuidor Optico (DIO)";
-  }else{
-    dispositivoDeRecepcao = "Transmissor Optico (TO)";
+    dispositivoDio = "Distribuidor Optico 48 fibras (DIO)";
+    numDIO += numeroPavimentos;
   }
-  numeroDeDispositivosDeRecepcao
+  if (paresFibrasDisponiveis <= 12){
+    dispositivoTo = "Transmissor Optico (TO)";
+    numTO += numeroPavimentos;
+  } else{
+    dispositivoTo = "";
+  }
 
   if (tipoFibra == "MM") {
-    tipoFibra = "Multimodo"
+    tipoFibra = "Multimodo";
   } else{
-    tipoFibra = "Monomodo"
+    tipoFibra = "Monomodo";
   }
 
   if (tipoFibraTBLS == "TB") {
-    tipoFibraTBLS = "Tigth buffer"
+    tipoFibraTBLS = "Tigth buffer";
   } else{
-    tipoFibraTBLS = "Loose"
+    tipoFibraTBLS = "Loose";
   }
 
-  const paresFibraTotal = paresFibrasDisponiveis * numeroPavimentos;
-
   //strings para retorno
-  const fibraoptica = 'Fibra ${tipoFibra} ${caracteristicaFibra} ${tipoFibraTBLS} ${paresFibraTotal} fibras';
+  const fibraoptica = 'Fibra ${tipoFibra} ${caracteristicaFibra} ${tipoFibraTBLS} ${paresFibraTotal} fibras $';
 
 
 
@@ -65,7 +71,9 @@ export function calcularBackbone(malhaData, BackboneData) {
     paresFibraTotal,
     comprimentoDeCaboBackbonePrimario,
     comprimentoDeCaboBackboneSecundario,
-    dispositivoDeRecepcao,
-    numeroDeDispositivosDeRecepcao,
+    dispositivoDio,
+    dispositivoTo,
+    numDIO,
+    numTO,
   };
 }
