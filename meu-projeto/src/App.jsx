@@ -3,8 +3,12 @@ import './App.css'
 import { FormularioInicialMH } from './FormularioInicialMH'
 import MalhaHorizontalForm from './FormulaioMH'
 import BackboneForm from './FormularioBB'
+import { useState } from 'react'
 
-const [malhaData, setMalhaData] = useState({
+
+function App() {
+
+  const [malhaData, setMalhaData] = useState({
   numeroPavimentos: "",
   medidaDistancia: "",
   categoriaCabo: "Cat5e",
@@ -25,8 +29,6 @@ const [backboneData, setBackboneData] = useState({
   backbonePrimario: 0,
   backboneSecundario: 0,
 });
-
-function App() {
   return (
     <BrowserRouter>
       <div className="app-shell">
@@ -60,8 +62,8 @@ function App() {
               path="/backbone"
               element={
                 <BackboneForm
-                  formData={backboneData}
-                  setFormData={setBackboneData}
+                  BackboneData={backboneData}
+                  setBackboneData={setBackboneData}
                 />
               }
             />
