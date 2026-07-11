@@ -20,8 +20,8 @@ export function calcularMH(formData) {
     const etiquetasTomada = totalPontos*3;
 
     //cabeamento horizontal
-    const quantidadeCaixas = (numTomadas * Number(formData.medidaDistancia))% 305 == 0 ? (numTomadas * Number(formData.medidaDistancia)) / 305 : Math.ceil((numTomadas * Number(formData.medidaDistancia)) / 305) + 1;
-    const etiquetaMH = totalPontos;
+    const quantidadeCaixas = (numTomadas * Number(formData.medidaDistancia))% 305 == 0 ? (numTomadas * Number(formData.medidaDistancia)) / 305 : Math.ceil((numTomadas * Number(formData.medidaDistancia)) / 305) + 1 + "caixas de 305m";
+    const etiquetaMH = totalPontos*2;
 
     //sala de telecomunicações
     const quantidadePPMH = Math.ceil(totalPontos / 24);
@@ -68,6 +68,7 @@ export function calcularMH(formData) {
         quantReguaDeFechamento,
         quantidadePorcaGaiola,
         quantidadeRolosAbracadeiraVelcro,
+        quantidadeRolosAbracadeiraPlastica,
         quantidadeReguaDeFiltroDeLinha,
     };
 }
